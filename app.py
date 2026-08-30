@@ -100,8 +100,6 @@ def patient_visual(lesion, eeg, cortical, multifocal, risk):
     draw.line(points, fill=(40, 184, 205, 225), width=3)
     return Image.alpha_composite(image, overlay).convert("RGB")
 
-
-st.markdown('<span class="tag">Theme B · Trajectory forecasting</span>', unsafe_allow_html=True)
 st.title("Pediatric Stroke Digital Twin")
 st.write(
     "Explore how clinical, imaging, EEG, genetic, and treatment information could be "
