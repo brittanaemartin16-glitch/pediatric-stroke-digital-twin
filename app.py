@@ -13,7 +13,8 @@ st.set_page_config(
 )
 
 ROOT = Path(__file__).resolve().parent
-PATIENT_IMAGE = ROOT / "patient-digital-twin.png"
+PATIENT_IMAGE = ROOT / "patient-digital-twin-natural.png"
+CT_IMAGE = ROOT / "synthetic-pediatric-ct.png"
 
 st.markdown(
     """
@@ -100,6 +101,7 @@ def patient_visual(lesion, eeg, cortical, multifocal, risk):
     draw.line(points, fill=(40, 184, 205, 225), width=3)
     return Image.alpha_composite(image, overlay).convert("RGB")
 
+
 st.title("Pediatric Stroke Digital Twin")
 st.write(
     "Explore how clinical, imaging, EEG, genetic, and treatment information could be "
@@ -134,12 +136,19 @@ stage = st.radio("Recovery stage", list(trajectory), horizontal=True)
 risk = trajectory[stage]
 category = "Lower" if risk < 30 else "Moderate" if risk < 60 else "Higher"
 
-left, right = st.columns([1.05, 1], gap="large")
+left, middle, right = st.columns([1.05, .82, 1], gap="large")
 with left:
     st.subheader("Living digital profile")
     st.image(
         patient_visual(lesion, eeg, cortical, multifocal, risk),
         caption="The highlighted brain region and EEG line update with the selected inputs.",
+        use_container_width=True,
+    )
+with middle:
+    st.subheader("Synthetic CT view")
+    st.image(
+        CT_IMAGE,
+        caption="Synthetic educational CT-style image showing a highlighted cortical region. Not a real patient scan.",
         use_container_width=True,
     )
 with right:
@@ -185,4 +194,3 @@ with framework_col:
         "A real version would require de-identified multicenter pediatric data, model training, "
         "external validation, calibration, fairness checks, and clinical oversight."
     )
-
